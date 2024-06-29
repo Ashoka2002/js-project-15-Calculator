@@ -6,6 +6,15 @@ let firstValue = 0;
 let operatorValue = "";
 let awaitingNextValue = false;
 
+// Calculate first and second value depending on operator
+const calculate = {
+  "/": (fNum, SNum) => fNum / SNum,
+  "*": (fNum, SNum) => fNum * SNum,
+  "-": (fNum, SNum) => fNum - SNum,
+  "+": (fNum, SNum) => fNum + SNum,
+  "=": (fNum, SNum) => SNum,
+};
+
 function sendNumberValue(num) {
   if (awaitingNextValue) {
     calculatorDisplay.textContent = num;
@@ -30,15 +39,6 @@ function addDecimal() {
   }
 }
 
-// Calculate first and second value depending on operator
-const calculate = {
-  "/": (fNum, SNum) => fNum / SNum,
-  "*": (fNum, SNum) => fNum * SNum,
-  "-": (fNum, SNum) => fNum - SNum,
-  "+": (fNum, SNum) => fNum + SNum,
-  "=": (fNum, SNum) => SNum,
-};
-
 function useOperator(operator) {
   if (operator && awaitingNextValue) {
     operatorValue = operator;
@@ -56,6 +56,14 @@ function useOperator(operator) {
   awaitingNextValue = true;
 }
 
+function resetAll() {
+  firstValue = 0;
+  operatorValue = "";
+  awaitingNextValue = false;
+  calculatorDisplay.textContent = 0;
+}
+
+// Event listners
 inputBtn.forEach((inputBtn) => {
   if (inputBtn.classList.length === 0) {
     inputBtn.addEventListener("click", () => sendNumberValue(inputBtn.value));
@@ -66,10 +74,4 @@ inputBtn.forEach((inputBtn) => {
   }
 });
 
-function resetAll() {
-  firstValue = 0;
-  operatorValue = "";
-  awaitingNextValue = false;
-  calculatorDisplay.textContent = 0;
-}
 clearBtn.addEventListener("click", resetAll);
